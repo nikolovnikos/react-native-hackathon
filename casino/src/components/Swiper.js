@@ -7,24 +7,35 @@ import {
 } from 'react-native'
 import Swiper from 'react-native-swiper'
 const { width } = Dimensions.get('window')
-const loading = require('../img/loading.gif')
+const loading = require('./src/img/loading.gif')
+const  imgList2 = [
+    require('./src/img/banner_8.jpg'),
+    require('./src/img/banner_9.jpg'),
+    require('./src/img/banner_10.jpg'),
+    require('./src/img/banner_11.jpg'),
+  ]
 
 const styles = {
-  wrapper: {
-    height: 300
+  banner_view: {
+    flex: 0,
+    height: 270
+  },
+  swipper_wrapper: {
+    height: 270
   },
 
   slide: {
     flex: 0,
     justifyContent: 'center',
     backgroundColor: 'transparent',
-    height: 200,
+    height: 180,
   },
   image: {
-    width,
-      height: 200,
+    height: 180,
     flex: 1,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    resizeMode: 'stretch',
+    width: width
   },
 
   loadingView: {
@@ -41,12 +52,36 @@ const styles = {
   loadingImage: {
     width: 60,
     height: 60
-  }
+  },
+
+  dots: {
+    position: 'absolute',
+    flex: 0,
+    height: 340,
+    top: 0
+  },
+
+  buttons: {
+    height: 30,
+    top: 80,
+  },
+
+  buttonPrev: {
+    transform: [{ rotate: '180deg'}],
+    top: 10,
+    flex:0
+  },
+  buttonText: {
+    fontSize: 50,
+    color: 'rgba(255,255,255,0.5)'
+  },
+
+
 }
 
 const Slide = props => {
   return (<View style={styles.slide}>
-    <Image onLoad={props.loadHandle.bind(null, props.i)} style={styles.image} source={{uri: props.uri}} />
+    <Image onLoad={props.loadHandle.bind(null, props.i)} style={styles.image} source={imgList2[props.i]}/>
     {
       !props.loaded && <View style={styles.loadingView}>
         <Image style={styles.loadingImage} source={loading} />
@@ -55,15 +90,16 @@ const Slide = props => {
   </View>)
 }
 
-export default class App extends Component {
+
+export default class Banner extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       imgList: [
-        'https://gitlab.pro/yuji/demo/uploads/d6133098b53fe1a5f3c5c00cf3c2d670/DVrj5Hz.jpg_1',
-        'https://gitlab.pro/yuji/demo/uploads/2d5122a2504e5cbdf01f4fcf85f2594b/Mwb8VWH.jpg',
-        'https://gitlab.pro/yuji/demo/uploads/4421f77012d43a0b4e7cfbe1144aac7c/XFVzKhq.jpg',
-        'https://gitlab.pro/yuji/demo/uploads/576ef91941b0bda5761dde6914dae9f0/kD3eeHe.jpg'
+        './src/img/banner_1.jpg',
+        './src/img/banner_2.jpg',
+        './src/img/banner_3.jpg',
+        './src/img/banner_4.jpg',
       ],
       loadQueue: [0, 0, 0, 0]
     }
@@ -78,8 +114,14 @@ export default class App extends Component {
   }
   render () {
     return (
-      <View style={{flex: 1}}>
-        <Swiper loadMinimal loadMinimalSize={1} style={styles.wrapper} loop={false}>
+      <View style={styles.banner_view}>
+        <Swiper showsButtons={true} loadMinimal loadMinimalSize={1} style={styles.swipper_wrapper} autoplay={true} autoplayTimeout={4} loop={true} paginationStyle={styles.dots}
+          dot={<View style={{backgroundColor: 'rgba(255,255,255,.5)', width: 5, height: 5, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
+          activeDot={<View style={{backgroundColor: 'orange', width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
+          buttonWrapperStyle={styles.buttons}
+          nextButton={<Text style={styles.buttonText}>›</Text>}
+          prevButton={<Text style={[styles.buttonText, styles.buttonPrev]}>›</Text>}
+          >
           {
             this.state.imgList.map((item, i) => <Slide
               loadHandle={this.loadHandle}
@@ -89,9 +131,6 @@ export default class App extends Component {
               key={i} />)
           }
         </Swiper>
-        <View>
-          <Text>Current Loaded Images: {this.state.loadQueue}</Text>
-        </View>
       </View>
     )
   }
