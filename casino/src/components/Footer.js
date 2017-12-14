@@ -105,7 +105,22 @@ export default class Footer extends React.Component {
 	       			 Casino.com is licensed and regulated to offer online casino gaming services under the jurisdiction of Gibraltar.©2017 Casino.com is an internationally registered trademark.Casino.com is operated by ONISAC Ltd of Suite 732 Europort, Gibraltar under a license issued by the Gibraltar Licensing Authority, RGL No .053 and regulated by the Gibraltar Gambling Commissioner.For players located in Great Britain only, Casino.com is operated by Mansion Europe Holdings Ltd under a United Kingdom Gambling Commission Remote Operating Licence, Number 000 - 039448 - R - 319446. Only players above the age of 18 are permitted to play our games.
 	        	</Text>	
 	        </View>
+<<<<<<< Updated upstream
         </ScrollView >
+=======
+	        <View style={{backgroundColor: 'black', height:150, justifyContent: 'center', alignItems: 'center'}}>
+	        <Image
+			    style={{height: 100, width: 100, }}
+			    source={{uri: 'http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/flat-gray-floral-icons-symbols-shapes/018446-flat-gray-floral-icon-symbols-shapes-smiley-happy.png'}}
+			/>
+	        	
+	        </View>
+	        <Image
+			    style={styles.funImage}
+			    source={{uri: 'https://lh3.googleusercontent.com/PhH2yvYlJFgb9AXjldUAJUTjenHhHMMTQa98G5oUC9ZKWMlpKHF7Cfh3ME6ZI-4W_9m7rac7Rhr86AURO6J2uVQ9Rv4OPsFQ9WflRJ_igF-8n5anSbx8-h2HyU11ILyr_v1RHkCNuDEun6fo6xVyroOCd16wwNe7Qk_l76mckJGPoGlCZLkpYVXJM7zUPMPqgx6T5kvCMnQvC84DsMaIuphTG78OSKZbZzu4PGj_goQTCjZol4UPRP4hgy5_tiQiHy6tj1eQgXDb1t084YWCmKqxDW_QQKkCwHF6KdfRgejrbjV2PX0X8witqdR2ZMhWFx6AO2N1RH1MJe_t72UmeRI0Z2sv4v-P7HeSHgH7KEFAufZonfoqFNaNLQkvH4L9lHfCp2qm5ra48LEOtCLUURe8kFBpgs6YVLEvzZeb3758SjkWiGv4WD8tTHO-EsZXbRrqWRvClhWj4ZDHv5X-QMmCgvSsExrmeBoj_UzagIVBvh3tXVPbq70HAcUR6Nc0hEzFxNCMBjnquroFEW_IMhSmu4fvKfqQ7TqKb1XdPPg5tGkDVbQ9CRCkiNKfWhi1U8D8LhXLy0x4hESLt4zudQ4aiS3hpwjNRCpnOQDx88Jp87D0eqhWqCpkkRkCvHjALKnstxaY2ahpKPDD-LXNNOWDmzUWL-NsYvxB=w1634-h887-no'}}
+			/>
+        </View >
+>>>>>>> Stashed changes
     );
   }
  
@@ -165,6 +180,16 @@ export default class Footer extends React.Component {
   			width: 80, 
   			height: 80,
   			marginBottom: 5,
+  		},
+
+  		funImage: {
+  			width:windowWidth, 
+  			height:200,
+  		},
+
+  		black : {
+  			backgroundColor:'black',
+  			marginTop:60
   		}
 
   });
