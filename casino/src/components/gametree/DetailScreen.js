@@ -66,7 +66,7 @@ export default class DetailScreen extends React.Component {
       return (
 
         <Animated.View
-          style={[StyleSheet.absoluteFill]}
+          style={{position:'absolute',top:-195,width:maxWidth,height:height}}
           pointerEvents={isAnimating || this.props.photo ? 'auto' : 'none'}
         >
                     { this.state.showWebView && this.renderContent() }
