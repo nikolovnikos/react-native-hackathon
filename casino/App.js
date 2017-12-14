@@ -22,6 +22,7 @@ const  imgList2 = [
     require('./src/img/banner_11.jpg'),
   ]
 
+import Login from './src/components/Login';
 import PHOTOS from './src/components/gametree/data';
 import { processImages, buildRows, normalizeRows } from './src/components/gametree/utils';
 import PhotoGallery from './src/components/gametree/PhotoGallery';
@@ -91,6 +92,7 @@ export default class Banner extends React.Component {
   render () {
     return (
       <ScrollView>
+        <Login/>
         <View style={styles.banner_view}>
           <Swiper showsButtons={true} loadMinimal loadMinimalSize={1} style={styles.swipper_wrapper} autoplay={true} autoplayTimeout={4} loop={true} paginationStyle={styles.dots}
             dot={<View style={{backgroundColor: 'rgba(255,255,255,.5)', width: 5, height: 5, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
