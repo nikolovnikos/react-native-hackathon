@@ -31,13 +31,13 @@ export default class Login extends Component {
         return (
             <View style={styles.container}>
                 {
-                    this.state.showLoginForm && <View>
+                    this.state.showLoginForm && <View style={styles.container2}>
                     <ScrollView style={{padding: 20}}>
                         <Text style={{fontSize: 27}}>
                             Login
                         </Text>
                         <TextInput placeholder='Username' />
-                        <TextInput placeholder='Password' />
+                        <TextInput placeholder='Password' secureTextEntry={true}/>
                         <View style={{margin:7}} />
                         <Button onPress={this.onSubmit} title="Submit"/>
                     </ScrollView>
@@ -68,7 +68,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        marginTop: 40,
+        // alignItems: 'center',
+        // justifyContent: 'center',
     },
+    container2: {
+        flex: 1,
+        alignItems: 'stretch',
+        justifyContent: 'space-between',
+    }
 });
