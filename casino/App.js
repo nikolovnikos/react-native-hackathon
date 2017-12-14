@@ -27,6 +27,8 @@ import { processImages, buildRows, normalizeRows } from './src/components/gametr
 import PhotoGallery from './src/components/gametree/PhotoGallery';
 import GridItem from './src/components/gametree/GridItem';
 
+import Footer from './src/components/Footer';
+
 
 
 const Slide = props => {
@@ -114,6 +116,7 @@ export default class Banner extends React.Component {
               renderRow={this.renderRow.bind(this, onPhotoOpen)}
             />}
         />
+        <Footer />
       </ScrollView>
     )
   }
