@@ -8,6 +8,7 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   ScrollView,
+  StatusBar
 } from 'react-native'
 import Swiper from 'react-native-swiper'
 
@@ -22,13 +23,13 @@ const  imgList2 = [
     require('./src/img/banner_11.jpg'),
   ]
 
-import Login from './src/components/Login';
 import PHOTOS from './src/components/gametree/data';
 import { processImages, buildRows, normalizeRows } from './src/components/gametree/utils';
 import PhotoGallery from './src/components/gametree/PhotoGallery';
 import GridItem from './src/components/gametree/GridItem';
 
 import Footer from './src/components/Footer';
+import Header from './src/components/Header';
 
 
 
@@ -45,6 +46,17 @@ const Slide = props => {
 
 
 export default class Banner extends React.Component {
+  state = {
+    imgList: [
+      './src/img/banner_1.jpg',
+      './src/img/banner_2.jpg',
+      './src/img/banner_3.jpg',
+      './src/img/banner_4.jpg',
+    ],
+    loadQueue: [0, 0, 0, 0],
+    dataSource: [],
+
+  }
   componentWillMount() {
     const processedImages = processImages(PHOTOS);
     let rows = buildRows(processedImages, maxWidth);
@@ -70,16 +82,6 @@ export default class Banner extends React.Component {
     </View>;
   constructor (props) {
     super(props)
-    this.state = {
-      imgList: [
-        './src/img/banner_1.jpg',
-        './src/img/banner_2.jpg',
-        './src/img/banner_3.jpg',
-        './src/img/banner_4.jpg',
-      ],
-      loadQueue: [0, 0, 0, 0],
-      dataSource: []
-    }
     this.loadHandle = this.loadHandle.bind(this)
   }
   loadHandle (i) {
@@ -89,10 +91,17 @@ export default class Banner extends React.Component {
       loadQueue
     })
   }
+
+  handleScroll(event: Object) {
+      // this.setState({
+      //     scrollView: event.nativeEvent.contentOffset.y
+      // });
+  }
   render () {
     return (
-      <ScrollView>
-        <Login/>
+      <ScrollView onScroll={this.handleScroll}>
+        <StatusBar hidden={true} />
+        <Header />
         <View style={styles.banner_view}>
           <Swiper showsButtons={true} loadMinimal loadMinimalSize={1} style={styles.swipper_wrapper} autoplay={true} autoplayTimeout={4} loop={true} paginationStyle={styles.dots}
             dot={<View style={{backgroundColor: 'rgba(255,255,255,.5)', width: 5, height: 5, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
@@ -117,6 +126,7 @@ export default class Banner extends React.Component {
               dataSource={this.state.dataSource}
               renderRow={this.renderRow.bind(this, onPhotoOpen)}
             />}
+          onScroll={this.state.scrollView}
         />
         <Footer />
       </ScrollView>
