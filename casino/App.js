@@ -15,7 +15,10 @@ import Swiper from 'react-native-swiper'
 
 const { width } = Dimensions.get('window')
 const maxWidth = Dimensions.get('window').width
+const height = Dimensions.get('window').height
 const loading = require('./src/img/loading.gif')
+const loading_img = require('./src/img/dragon.png')
+const loading_img_init = require('./src/img/loader_init.gif')
 const  imgList2 = [
     require('./src/img/banner_8.jpg'),
     require('./src/img/banner_9.jpg'),
@@ -32,6 +35,8 @@ import Footer from './src/components/Footer';
 import Header from './src/components/Header';
 
 
+var reactMixin = require('react-mixin');
+var TimerMixin = require('react-timer-mixin');
 
 const Slide = props => {
   return (<View style={styles.slide}>
@@ -46,6 +51,7 @@ const Slide = props => {
 
 
 export default class Banner extends React.Component {
+  mixins: [TimerMixin]
   state = {
     imgList: [
       './src/img/banner_1.jpg',
@@ -55,20 +61,28 @@ export default class Banner extends React.Component {
     ],
     loadQueue: [0, 0, 0, 0],
     dataSource: [],
-    scrolla: 0
-
-
+    loader_init: true
   }
   componentWillMount() {
-    const processedImages = processImages(PHOTOS);
-    let rows = buildRows(processedImages, maxWidth);
-    rows = normalizeRows(rows, maxWidth);
+      const processedImages = processImages(PHOTOS);
+      let rows = buildRows(processedImages, maxWidth);
+      rows = normalizeRows(rows, maxWidth);
 
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2
-    });
+      const ds = new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 !== r2
+      });
 
       this.setState({dataSource: ds.cloneWithRows(rows)});
+  }
+  loader_init() {
+    TimerMixin.setTimeout( () => {
+      this.setState({
+        loader_init: false
+      })
+    }, 600);
+  }
+  componentDidMount() {
+    this.loader_init()
   }
   renderRow = (onPhotoOpen, row) =>
     <View
@@ -95,15 +109,21 @@ export default class Banner extends React.Component {
   }
 
   handleScroll(event: Object) {
-    let scrolla = event.nativeEvent.contentOffset.y;
-    this.setState({
-      scrolla
-    })
+      this.setState({
+          scrollView: event.nativeEvent.contentOffset.y
+      });
   }
   render () {
-  //  console.log(this.state.scrolla);
     return (
-      <ScrollView onScroll={this.handleScroll.bind(this)} scrollEventThrottle={16}>
+      <ScrollView onScroll={this.handleScroll}>
+        {this.state.loader_init &&
+          <View style={styles.loader_view}>
+            <Image source={loading_img} style={styles.loading_img_1}/>
+            <Image sourse={loading_img_init} style={styles.loading_img_2} />
+          </View>
+        }
+        {!this.state.loader_init &&
+          <View>
         <StatusBar hidden={true} />
         <Header />
         <View style={styles.banner_view}>
@@ -130,15 +150,35 @@ export default class Banner extends React.Component {
               dataSource={this.state.dataSource}
               renderRow={this.renderRow.bind(this, onPhotoOpen)}
             />}
-          onScroll={this.state.scrolla}
+          onScroll={this.state.scrollView}
         />
         <Footer />
+      </View>
+      }
       </ScrollView>
     )
   }
 }
 
 const styles = {
+  loader_view: {
+    width: width,
+    height: height,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1
+  },
+  loading_img_1 : {
+    width: width - 30,
+    resizeMode: 'contain'
+  },
+  loading_img_2: {
+    width: width/3,
+    height: height/3,
+    resizeMode: 'contain',
+    flex: 0
+  },
   banner_view: {
     flex: 0,
     height: 195
