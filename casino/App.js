@@ -20,7 +20,7 @@ const loading = require('./src/img/loading.gif')
 const loading_img = require('./src/img/dragon.png')
 const loading_img_init = require('./src/img/loader_init.gif')
 const  imgList2 = [
-    require('./src/img/banner_8.jpg'),
+    require('./src/img/banner_8.jpg'),g
     require('./src/img/banner_9.jpg'),
     require('./src/img/banner_10.jpg'),
     require('./src/img/banner_11.jpg'),
@@ -61,6 +61,7 @@ export default class Banner extends React.Component {
     ],
     loadQueue: [0, 0, 0, 0],
     dataSource: [],
+    scrolla: 0,
     loader_init: true
   }
   componentWillMount() {
@@ -109,13 +110,14 @@ export default class Banner extends React.Component {
   }
 
   handleScroll(event: Object) {
-      this.setState({
-          scrollView: event.nativeEvent.contentOffset.y
-      });
+    let scrolla = event.nativeEvent.contentOffset.y;
+    this.setState({
+      scrolla
+    })
   }
   render () {
     return (
-      <ScrollView onScroll={this.handleScroll}>
+      <ScrollView onScroll={this.handleScroll.bind(this)} scrollEventThrottle={16}>
         {this.state.loader_init &&
           <View style={styles.loader_view}>
             <Image source={loading_img} style={styles.loading_img_1}/>
@@ -150,7 +152,7 @@ export default class Banner extends React.Component {
               dataSource={this.state.dataSource}
               renderRow={this.renderRow.bind(this, onPhotoOpen)}
             />}
-          onScroll={this.state.scrollView}
+          onScroll={this.state.scrolla}
         />
         <Footer />
       </View>
@@ -159,6 +161,7 @@ export default class Banner extends React.Component {
     )
   }
 }
+
 
 const styles = {
   loader_view: {
