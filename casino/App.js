@@ -55,6 +55,8 @@ export default class Banner extends React.Component {
     ],
     loadQueue: [0, 0, 0, 0],
     dataSource: [],
+    scrolla: 0
+
 
   }
   componentWillMount() {
@@ -93,13 +95,15 @@ export default class Banner extends React.Component {
   }
 
   handleScroll(event: Object) {
-      // this.setState({
-      //     scrollView: event.nativeEvent.contentOffset.y
-      // });
+    let scrolla = event.nativeEvent.contentOffset.y;
+    this.setState({
+      scrolla
+    })
   }
   render () {
+  //  console.log(this.state.scrolla);
     return (
-      <ScrollView onScroll={this.handleScroll}>
+      <ScrollView onScroll={this.handleScroll.bind(this)} scrollEventThrottle={16}>
         <StatusBar hidden={true} />
         <Header />
         <View style={styles.banner_view}>
@@ -126,7 +130,7 @@ export default class Banner extends React.Component {
               dataSource={this.state.dataSource}
               renderRow={this.renderRow.bind(this, onPhotoOpen)}
             />}
-          onScroll={this.state.scrollView}
+          onScroll={this.state.scrolla}
         />
         <Footer />
       </ScrollView>

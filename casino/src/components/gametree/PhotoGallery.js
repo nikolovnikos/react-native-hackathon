@@ -96,6 +96,7 @@ export default class PhotoGallery extends React.Component {
   };
 
   render() {
+    //console.log(this.props.onScroll);
     const { photo, openProgress, isAnimating } = this.state;
     return (
       <View style={{ flex: 1 }}>
@@ -111,6 +112,7 @@ export default class PhotoGallery extends React.Component {
           onClose={this.close}
           openProgress={openProgress}
           isAnimating={isAnimating}
+          onScroll={this.props.onScroll}
         />
       </View>
     );
