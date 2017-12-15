@@ -60,13 +60,13 @@ export default class DetailScreen extends React.Component {
   }
 
   render() {
-    const { onClose, openProgress, isAnimating } = this.props;
+    const { onClose, openProgress, isAnimating, scrolla } = this.props;
     const { localPhoto } = this.state;
+
     if (localPhoto) {
       return (
-
         <Animated.View
-          style={{position:'absolute',top:-195,width:maxWidth,height:height}}
+          style={{position:'absolute',top:this.props.onScroll-255,width:maxWidth,height:height}}
           pointerEvents={isAnimating || this.props.photo ? 'auto' : 'none'}
         >
                     { this.state.showWebView && this.renderContent() }
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'grey',
     padding: 10,
-    paddingTop: 30,
+    paddingTop: 10,
     paddingBottom: 10,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: 'white',
