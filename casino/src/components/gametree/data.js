@@ -486,17 +486,6 @@ export default [
     }
   },
   {
-    id: '35991086210',
-    postedBy: 'Just me, Aline',
-    width: 640,
-    height: 427,
-    title: 'as midnight goes by at the Lofoten',
-    source: {
-      uri: 'https://cdn.casinohawks.com/images/may-2017/temple-of-luxor-slot_header_680x276.jpg',
-      cache: 'force-cache'
-    }
-  },
-  {
     id: '36221070302',
     postedBy: 'Wim Boon',
     width: 640,
@@ -562,17 +551,8 @@ export default [
       cache: 'force-cache'
     }
   },
-    {
-    id: '35991086210',
-    postedBy: 'Just me, Aline',
-    width: 640,
-    height: 427,
-    title: 'as midnight goes by at the Lofoten',
-    source: {
-      uri: 'https://cdn.casinohawks.com/images/may-2017/temple-of-luxor-slot_header_680x276.jpg',
-      cache: 'force-cache'
-    }
-  },
+
+  
   {
     id: '36213975142',
     postedBy: 'John Appleton',
