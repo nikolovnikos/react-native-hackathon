@@ -20,7 +20,7 @@ const loading = require('./src/img/loading.gif')
 const loading_img = require('./src/img/dragon.png')
 const loading_img_init = require('./src/img/loader_init.gif')
 const  imgList2 = [
-    require('./src/img/banner_8.jpg'),g
+    require('./src/img/banner_8.jpg'),
     require('./src/img/banner_9.jpg'),
     require('./src/img/banner_10.jpg'),
     require('./src/img/banner_11.jpg'),
