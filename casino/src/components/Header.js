@@ -9,8 +9,10 @@ import {
   SectionList,
   Image,
   Button,
-  Dimensions
+  Dimensions,
+  Linking
 } from 'react-native';
+import { Constants } from 'expo';
 
 const width = Dimensions.get('window').width
 
@@ -80,9 +82,10 @@ export default class Heder extends React.Component {
                     {title: 'About us', data: ['About Mansion', 'Contact Us', 'Careers']},
                   ]}
                   renderItem={({item}) => <Text style={styles.menuItem}>{item}</Text>}
-                  renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+                  renderSectionHeader={({section}) => <Text style={styles.sectionHeader} >{section.title}</Text>}
                   keyExtractor={(item, index) => index}
                 />
+                <Text style={styles.redirectLink} onPress={ ()=>{ Linking.openURL('https://mobile.casino.com')}}>Mobile Casino </Text>
               </View>
             }
             {
@@ -165,5 +168,13 @@ const styles = StyleSheet.create({
   login_form: {
       width: width,
       top: 0,
-  }
+  },
+  redirectLink: {
+    backgroundColor: '#000',
+    color: '#fff',
+    textAlign: 'left',
+    paddingLeft: 20,
+    paddingTop: 5,
+    paddingBottom: 20,
+  },
 });
