@@ -8,19 +8,20 @@ import {
   TouchableOpacity,
   SectionList,
   Image,
-  Button,
   Dimensions,
-  Linking
+  Linking,
+  WebView
 } from 'react-native';
 import { Constants } from 'expo';
 
 const width = Dimensions.get('window').width
+const height = Dimensions.get('window').height
 
 export default class Heder extends React.Component {
 
   state = {
       isLoggedIn: false,
-      showLoginForm: false
+      showLoginForm: false,
   }
   constructor(props) {
     super(props)
@@ -29,12 +30,11 @@ export default class Heder extends React.Component {
 
   _onPressButton = () => {
     let old = !this.state.visible
-    this.setState({
-      visible: old
-    })
+    this.setState({visible: old, showLoginForm: false})
   }
 
   onLoginPress = () => {
+      this.setState({visible: false})
       if (this.state.showLoginForm === true) {
           this.setState({showLoginForm: false});
       }
@@ -44,62 +44,72 @@ export default class Heder extends React.Component {
   };
 
   onLogoutPress = () => {
-      this.setState({isLoggedIn: false, showLoginForm: false});
+      this.setState({isLoggedIn: false, showLoginForm: false, visible: false});
   };
 
   onSubmit = () => {
       this.setState({isLoggedIn: true, showLoginForm: false});
   };
 
+  onMenuClick(rounte) {
+    this.props.onChangeMenu(rounte);
+  }
+
   render() {
     return (
       <View style={styles.header}>
           <View style={styles.header_container}>
               <TouchableOpacity onPress={this._onPressButton} style={styles.menuIconWrap}>
-                    <Image source={{uri: 'https://d30y9cdsu7xlg0.cloudfront.net/png/119047-200.png'}} style={styles.menuImage}  />
+                <Image source={{uri: 'https://d30y9cdsu7xlg0.cloudfront.net/png/119047-200.png'}} style={styles.menuImage}  />
               </TouchableOpacity>
               <Image source={{uri: 'https://vogueplay.com/au/wp-content/uploads/2017/07/logo_casino_com_286%D1%85186.png'}}
               style={styles.logoImage} />
               <View style={styles.login_btn}>
                {
                    !this.state.showLoginForm && this.state.isLoggedIn && <View>
-                   <Button onPress={this.onLogoutPress} title="Logout" color="#FFA500"/>
+                   <TouchableOpacity onPress={this.onLogoutPress} style={styles.header_btns} >
+                     <Text style={styles.text_def_1}>Logout</Text>
+                   </TouchableOpacity>
                    </View>
                }
                {
                    !this.state.isLoggedIn &&  <View>
-                   <Button onPress={this.onLoginPress} title="Login" color="#FFA500"/>
+                   <TouchableOpacity onPress={this.onLoginPress} style={styles.header_btns} >
+                     <Text style={styles.text_def_1}>Login</Text>
+                   </TouchableOpacity>
                    </View>
                }
                </View>
             </View>
             {
                 this.state.visible && <View>
-                <SectionList
-                style={styles.menuOpened}
-                  sections={[
-                    {title: 'Home', data: ['Login', 'Download']},
-                    {title: 'About us', data: ['About Mansion', 'Contact Us', 'Careers']},
-                  ]}
-                  renderItem={({item}) => <Text style={styles.menuItem}>{item}</Text>}
-                  renderSectionHeader={({section}) => <Text style={styles.sectionHeader} >{section.title}</Text>}
-                  keyExtractor={(item, index) => index}
-                />
-                <Text style={styles.redirectLink} onPress={ ()=>{ Linking.openURL('https://mobile.casino.com')}}>Mobile Casino </Text>
-              </View>
+                    <SectionList
+                    style={styles.menuOpened}
+                      sections={[
+                        {title: 'Home', data: [{title: 'Login', route: '/login/'}, {title: 'Register', route: '/register/'}, {title: 'Mobile Casino', route: 'https://mobile.casino.com'}]},
+                        {title: 'About us', data: [{title: 'About Mansion', route: '/about/'}, {title: 'Contact Us', route: '/contact/'}, {title: 'Careers', 'route': '/cariars/'}]},
+                      ]}
+                      renderItem={({item}) => <Text onPress={this.onMenuClick.bind(this, item.route)} style={styles.menuItem}>{item.title}</Text>}
+                      renderSectionHeader={({section}) => <Text style={styles.sectionHeader} >{section.title}</Text>}
+                      keyExtractor={(item, index) => index}
+                    />
+                </View>
             }
             {
                this.state.showLoginForm && <View style={styles.login_form}>
-               <ScrollView style={{padding: 20}}>
-                   <Text style={{fontSize: 27}}>
-                       Login
-                   </Text>
-                   <TextInput placeholder='Username' />
-                   <View style={{margin:7}} />
-                   <TextInput placeholder='Password' secureTextEntry={true}/>
-                   <View style={{margin:7}} />
-                   <Button onPress={this.onSubmit} title="Submit" color="#FFA500"/>
-               </ScrollView>
+                 <ScrollView style={{padding: 20}}>
+                     <Text style={{fontSize: 27}}>
+                         Login
+                     </Text>
+                     <View style={{margin:5}} />
+                     <TextInput placeholder='Username' style={styles.text_input}/>
+                     <View style={{margin:5}} />
+                     <TextInput placeholder='Password' secureTextEntry={true} style={styles.text_input}/>
+                     <View style={{margin:7}} />
+                     <TouchableOpacity onPress={this.onSubmit} style={[styles.header_btns, styles.submit_btn]}>
+                       <Text style={styles.text_def_1}>Submit</Text>
+                     </TouchableOpacity>
+                 </ScrollView>
                </View>
             }
       </View>
@@ -120,7 +130,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
   },
   login_btn: {
-    right: 10,
+      right: 10,
       position: 'absolute',
       top: 15
   },
@@ -130,6 +140,24 @@ const styles = StyleSheet.create({
     top: 0,
     position: 'absolute',
 
+  },
+  header_btns: {
+    width: 50,
+    height: 30,
+    backgroundColor: "#FFA500",
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5
+  },
+  text_def_1 : {
+    color: "#fff"
+  },
+  submit_btn : {
+    width: 80
+  },
+  text_input : {
+    paddingBottom: 5,
+    paddingLeft: 5
   },
   menuIconWrap: {
     backgroundColor: '#fff',
@@ -168,13 +196,5 @@ const styles = StyleSheet.create({
   login_form: {
       width: width,
       top: 0,
-  },
-  redirectLink: {
-    backgroundColor: '#000',
-    color: '#fff',
-    textAlign: 'left',
-    paddingLeft: 20,
-    paddingTop: 5,
-    paddingBottom: 20,
-  },
+  }
 });

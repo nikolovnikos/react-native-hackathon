@@ -8,7 +8,9 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   ScrollView,
-  StatusBar
+  StatusBar,
+  TouchableOpacity,
+  WebView
 } from 'react-native'
 import Swiper from 'react-native-swiper'
 
@@ -62,7 +64,9 @@ export default class Banner extends React.Component {
     loadQueue: [0, 0, 0, 0],
     dataSource: [],
     scrolla: 0,
-    loader_init: true
+    loader_init: true,
+    show_webview: false,
+    webview_url: ''
   }
   componentWillMount() {
       const processedImages = processImages(PHOTOS);
@@ -115,7 +119,32 @@ export default class Banner extends React.Component {
       scrolla
     })
   }
+
+  onChangeMenu(item) {
+    this.setState({
+      webview_url : item,
+      show_webview: true
+    });
+    console.log(item)
+  }
+
   render () {
+    if (this.state.show_webview) {
+      return (
+        <View  style={{ flex: 1, height: height, backgroundColor:'#d3d3d3', top: 0, position: 'absolute', width: width}}>
+            <StatusBar hidden={true} />
+            <View style={styles.backButton}>
+                <TouchableOpacity onPress={() => this.setState({show_webview: false})}>
+                    <Text>Go Back</Text>
+                </TouchableOpacity>
+            </View>
+            <WebView source={{uri: this.state.webview_url}} startInLoadingState scalesPageToFit javaScriptEnabled scrollEnabled
+            style={{ flex: 1, height: height, flexDirection: 'column'}}
+            />
+        </View>
+      )
+    }
+    else {
     return (
       <ScrollView onScroll={this.handleScroll.bind(this)} scrollEventThrottle={16}>
         {this.state.loader_init &&
@@ -127,7 +156,7 @@ export default class Banner extends React.Component {
         {!this.state.loader_init &&
           <View>
         <StatusBar hidden={true} />
-        <Header />
+        <Header onChangeMenu={this.onChangeMenu.bind(this)} />
         <View style={styles.banner_view}>
           <Swiper showsButtons={true} loadMinimal loadMinimalSize={1} style={styles.swipper_wrapper} autoplay={true} autoplayTimeout={4} loop={true} paginationStyle={styles.dots}
             dot={<View style={{backgroundColor: 'rgba(255,255,255,.5)', width: 5, height: 5, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}} />}
@@ -159,6 +188,7 @@ export default class Banner extends React.Component {
       }
       </ScrollView>
     )
+    }
   }
 }
 
@@ -241,4 +271,15 @@ const styles = {
     fontSize: 50,
     color: 'rgba(255,255,255,0.5)'
   },
+  backButton: {
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    borderWidth: 1,
+    borderColor: 'grey',
+    padding: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'white',
+    borderRadius: 5
+  }
 }

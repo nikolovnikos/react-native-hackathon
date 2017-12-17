@@ -39,7 +39,7 @@ export default class DetailScreen extends React.Component {
      scalesPageToFit
      javaScriptEnabled
 
-     style={{ flex: 1, height: 400, flexDirection: 'column'}}
+     style={{ flex: 1, height: height, flexDirection: 'column'}}
         />
 
 
