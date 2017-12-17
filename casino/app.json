@@ -16,7 +16,11 @@
       "assetExts": ["ttf", "mp4"]
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.masnion.casinonative"
+    },
+    "android": {
+      "package": "com.masnion.casinonative"
     }
   }
 }
