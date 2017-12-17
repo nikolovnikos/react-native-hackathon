@@ -8,8 +8,9 @@
     "primaryColor": "#cccccc",
     "icon": "./assets/icons/app-icon.png",
     "loading": {
-      "icon": "./assets/icons/loading-icon.png",
-      "hideExponentText": false
+      "icon": "./assets/icons/app-icon.png",
+      "hideExponentText": false,
+      "backgroundColor": "#212121"
     },
     "packagerOpts": {
       "assetExts": ["ttf", "mp4"]
