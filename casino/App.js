@@ -8,9 +8,9 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   ScrollView,
-  StatusBar,
   TouchableOpacity,
-  WebView
+  WebView,
+  StatusBar
 } from 'react-native'
 import Swiper from 'react-native-swiper'
 
@@ -87,6 +87,7 @@ export default class Banner extends React.Component {
     }, 600);
   }
   componentDidMount() {
+    StatusBar.setHidden(true);
     this.loader_init()
   }
   renderRow = (onPhotoOpen, row) =>
@@ -132,7 +133,6 @@ export default class Banner extends React.Component {
     if (this.state.show_webview) {
       return (
         <View  style={{ flex: 1, height: height, backgroundColor:'#d3d3d3', top: 0, position: 'absolute', width: width}}>
-            <StatusBar hidden={true} />
             <View style={styles.backButton}>
                 <TouchableOpacity onPress={() => this.setState({show_webview: false})}>
                     <Text>Go Back</Text>
@@ -155,7 +155,6 @@ export default class Banner extends React.Component {
         }
         {!this.state.loader_init &&
           <View>
-        <StatusBar hidden={true} />
         <Header onChangeMenu={this.onChangeMenu.bind(this)} />
         <View style={styles.banner_view}>
           <Swiper showsButtons={true} loadMinimal loadMinimalSize={1} style={styles.swipper_wrapper} autoplay={true} autoplayTimeout={4} loop={true} paginationStyle={styles.dots}
